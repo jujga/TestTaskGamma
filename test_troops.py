@@ -6,6 +6,7 @@ from time import sleep
 from enum import Enum
 
 
+#используется Enum для определения стратегии поиска и локатором, а также возвращается найденный вебэлемент или массив вебэлементов
 class WebElements(Enum):
     USERNAME_FIELD = (By.ID, "_username")
     USERPASSWORD_FIELD = (By.ID, "_password")
@@ -18,14 +19,14 @@ class WebElements(Enum):
     def __init__(self, location_strategy, locator):
         self.location_strategy = location_strategy
         self.locator = locator
-
+    #возвращает найденный вебэлемент
     def get_web_el(self, driver):
         return driver.find_element(self.location_strategy, self.locator)
-
+    #возвращает массив найденных вебэлементов
     def get_web_els(self, driver):
         return driver.find_elements(self.location_strategy, self.locator)
 
-
+#явки-пароли вынесены в класс. Могут использоваться другими тестами в модуле
 class Credentials:
     username = 'interim_director0@troops.online'
     userpassword = 'interim_director0@troops.online'
@@ -40,6 +41,7 @@ def firefox_driver():
     driver.close()
 
 def test_adding_talants_title(firefox_driver):
+    #класс с ожидаемыми результатами
     class ExpectedResults:
         popup_title = 'Add talents'
     firefox_driver.get('https://app-dev.troops.online/')
