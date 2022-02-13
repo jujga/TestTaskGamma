@@ -2,11 +2,13 @@ import pytest
 from selenium import webdriver
 from webdriver_manager import firefox
 from selenium.webdriver.common.by import By
-from time import sleep
 from enum import Enum
+from time import sleep
+from selenium.webdriver.common import action_chains
 
 
-#используется Enum для определения стратегии поиска и локатором, а также возвращается найденный вебэлемент или массив вебэлементов
+
+#используется Enum для определения стратегии поиска и локаторов, а также возвращается найденный вебэлемент/массив вебэлементов
 class WebElements(Enum):
     USERNAME_FIELD = (By.ID, "_username")
     USERPASSWORD_FIELD = (By.ID, "_password")
@@ -50,7 +52,10 @@ def test_adding_talants_title(firefox_driver):
     WebElements.USERPASSWORD_FIELD.get_web_el(firefox_driver).send_keys(Credentials.userpassword)
     # click on the Se connecter button
     WebElements.SE_BUTTON.get_web_el(firefox_driver).click()
-    #click on the Talents link. Sometimes test is failed. sleep(1) helps.
+    #click on the Talents link
+    #sleep(1) #костыль (
+    #WebElements.TALENTS_LINK.get_web_el(firefox_driver).click()
+    action_chains.ActionChains(firefox_driver).move_to_element(WebElements.TALENTS_LINK.get_web_el(firefox_driver)).perform()
     WebElements.TALENTS_LINK.get_web_el(firefox_driver).click()
     #click on the Add button
     WebElements.ADD_BUTTON.get_web_el(firefox_driver).click()
