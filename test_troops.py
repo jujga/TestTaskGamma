@@ -3,7 +3,6 @@ from selenium import webdriver
 from webdriver_manager import firefox
 from selenium.webdriver.common.by import By
 from enum import Enum
-from time import sleep
 from selenium.webdriver.common import action_chains
 
 
